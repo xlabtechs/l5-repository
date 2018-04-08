@@ -4,7 +4,6 @@ namespace Prettus\Repository\Contracts;
 /**
  * Interface RepositoryInterface
  * @package Prettus\Repository\Contracts
- * @author Anderson Andrade <contato@andersonandra.de>
  */
 interface RepositoryInterface
 {
@@ -149,7 +148,7 @@ interface RepositoryInterface
      *
      * @return mixed
      */
-    public function update(array $attributes, $id);
+    public function update($id, array $attributes);
 
     /**
      * Update or Create an entity in repository
@@ -190,7 +189,7 @@ interface RepositoryInterface
      * @return $this
      */
     public function with($relations);
-
+    
     /**
      * Load relation with closure
      *
@@ -200,7 +199,7 @@ interface RepositoryInterface
      * @return $this
      */
     public function whereHas($relation, $closure);
-
+    
     /**
      * Add subselect queries to count the relations.
      *

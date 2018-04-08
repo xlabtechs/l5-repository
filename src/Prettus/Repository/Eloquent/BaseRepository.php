@@ -24,7 +24,6 @@ use Prettus\Validator\Exceptions\ValidatorException;
 /**
  * Class BaseRepository
  * @package Prettus\Repository\Eloquent
- * @author Anderson Andrade <contato@andersonandra.de>
  */
 abstract class BaseRepository implements RepositoryInterface, RepositoryCriteriaInterface
 {
@@ -588,7 +587,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      *
      * @return mixed
      */
-    public function update(array $attributes, $id)
+    public function update($id, array $attributes)
     {
         $this->applyScope();
 

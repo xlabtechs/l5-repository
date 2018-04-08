@@ -6,7 +6,6 @@ use Prettus\Repository\Generators\Migrations\SchemaParser;
 /**
  * Class RepositoryEloquentGenerator
  * @package Prettus\Repository\Generators
- * @author Anderson Andrade <contato@andersonandra.de>
  */
 class RepositoryEloquentGenerator extends Generator
 {

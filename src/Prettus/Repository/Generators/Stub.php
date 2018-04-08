@@ -5,7 +5,6 @@ namespace Prettus\Repository\Generators;
 /**
  * Class Stub
  * @package Prettus\Repository\Generators
- * @author Anderson Andrade <contato@andersonandra.de>
  */
 class Stub
 {

@@ -6,7 +6,6 @@ use Illuminate\Contracts\Support\Arrayable;
 /**
  * Class RulesParser
  * @package Prettus\Repository\Generators\Migrations
- * @author Anderson Andrade <contato@andersonandra.de>
  */
 class RulesParser implements Arrayable
 {

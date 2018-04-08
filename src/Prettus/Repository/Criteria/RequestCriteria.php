@@ -1,5 +1,5 @@
 <?php
-namespace Prettus\Repository\Criteria;
+namespace App\Criteria;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
-/**
- * Class RequestCriteria
- * @package Prettus\Repository\Criteria
- * @author Anderson Andrade <contato@andersonandra.de>
- */
 class RequestCriteria implements CriteriaInterface
 {
     /**
@@ -98,11 +93,11 @@ class RequestCriteria implements CriteriaInterface
                     } else {
                         if (!is_null($value)) {
                             if(!is_null($relation)) {
-                                $query->orWhereHas($relation, function($query) use($field,$condition,$value) {
+                                $query->whereHas($relation, function($query) use($field,$condition,$value) {
                                     $query->where($field,$condition,$value);
                                 });
                             } else {
-                                $query->orWhere($modelTableName.'.'.$field, $condition, $value);
+                                $query->where($modelTableName.'.'.$field, $condition, $value);
                             }
                         }
                     }

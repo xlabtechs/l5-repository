@@ -11,7 +11,6 @@ use Exception;
 /**
  * Class CacheableRepository
  * @package Prettus\Repository\Traits
- * @author Anderson Andrade <contato@andersonandra.de>
  */
 trait CacheableRepository
 {
@@ -121,15 +120,16 @@ trait CacheableRepository
     public function getCacheKey($method, $args = null)
     {
 
+         /** @var \Illuminate\Http\Request $request */
         $request = app('Illuminate\Http\Request');
         $args = serialize($args);
         $criteria = $this->serializeCriteria();
-        $key = sprintf('%s@%s-%s', get_called_class(), $method, md5($args . $criteria . $request->fullUrl()));
+        $sql = Utils::getSql($this->model);
+        $key = sprintf('%s@%s-%s', get_called_class(), $method, md5($sql.$args.$criteria.json_encode($request->input())));
 
         CacheKeys::putKey(get_called_class(), $key);
 
         return $key;
-
     }
 
     /**
@@ -340,4 +340,41 @@ trait CacheableRepository
         $this->resetScope();
         return $value;
     }
+	
+	    public function count($columns = '*')
+    {
+        if (!$this->allowedCache('count') || $this->isSkippedCache()) {
+            return parent::count($columns);
+        }
+
+        $key = $this->getCacheKey('count', func_get_args());
+        $minutes = $this->getCacheMinutes();
+        $value = $this->getCacheRepository()->remember($key, $minutes, function () use ($columns) {
+            return parent::count($columns);
+        });
+
+        $this->resetModel();
+        $this->resetScope();
+        return $value;
+    }
+
+
+    public function countGroupBy($rawSelectColumns, $groupColumns)
+    {
+
+        if (!$this->allowedCache('countGroupBy') || $this->isSkippedCache()) {
+            return parent::countGroupBy($rawSelectColumns, $groupColumns);
+        }
+
+        $key = $this->getCacheKey('countGroupBy', func_get_args());
+        $minutes = $this->getCacheMinutes();
+        $value = $this->getCacheRepository()->remember($key, $minutes, function () use ($rawSelectColumns, $groupColumns) {
+            return parent::countGroupBy($rawSelectColumns, $groupColumns);
+        });
+
+        $this->resetModel();
+        $this->resetScope();
+        return $value;
+    }
+
 }
