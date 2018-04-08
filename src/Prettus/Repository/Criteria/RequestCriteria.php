@@ -1,5 +1,5 @@
 <?php
-namespace App\Criteria;
+namespace Prettus\Repository\Criteria;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
